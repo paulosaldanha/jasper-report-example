@@ -23,27 +23,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.jasper.jasper.model.Product;
 import com.example.jasper.jasper.repository.ProductRepository;
+import com.example.jasper.jasper.service.ProductService;
 
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 @RequiredArgsConstructor
 public class ReportController {
-    private final ProductRepository productRepository;
+    private final ProductService productService;
 
     @GetMapping("/")
     public void showProducts(HttpServletResponse response) throws JRException, IOException{
-        String resourceLocation = "classpath:userReport.jrxml";
-        File file = ResourceUtils.getFile(resourceLocation);
-        JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
-
-        // creating our list of beans
-        List<Product> dataList = productRepository.findAll();
-        // creating datasource from bean list
-        JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(dataList);
-        Map<String, Object> parameters = new HashMap<>();
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, beanColDataSource);
-        JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
+        
+        JasperExportManager.exportReportToPdfStream(productService.generateReport(), response.getOutputStream());
         response.setContentType("application/pdf");
         response.addHeader("Content-Disposition", "inline; filename=jasper.pdf;");
     }
