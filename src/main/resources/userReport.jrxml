@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="userReport" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20"
+              topMargin="20" bottomMargin="20">
+    <parameter name="idEmployee" class="java.lang.Integer" isForPrompting="false"/>
+    <queryString>
+        <![CDATA[SELECT * FROM PRODUCT]]>
+    </queryString>
+    <field name="name" class="java.lang.String"/>
+    <field name="description" class="java.lang.String"/>
+    <field name="price" class="java.lang.Double"/>
+    <detail>
+        <band height="20" splitType="Stretch">
+            <textField>
+                <reportElement x="0" y="0" width="156" height="20"/>
+                <textElement/>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
+            </textField>
+             <textField>
+                <reportElement x="100" y="0" width="156" height="20"/>
+                <textElement/>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{description}]]></textFieldExpression>
+            </textField>
+             <textField>
+                <reportElement x="200" y="0" width="156" height="20"/>
+                <textElement/>
+                <textFieldExpression class="java.lang.Double"><![CDATA[$F{price}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+</jasperReport>
